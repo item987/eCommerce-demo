@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.item987</groupId>
-    <artifactId>eCommerce-demo</artifactId>
+    <artifactId>legacy-application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>eCommerce-demo</name>
-    <description>eCommerce-demo</description>
+    <name>legacy-application</name>
+    <description>Legacy monolith application</description>
     <properties>
         <java.version>18</java.version>
     </properties>

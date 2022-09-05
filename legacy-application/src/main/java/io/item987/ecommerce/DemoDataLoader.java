@@ -1,8 +1,5 @@
 package io.item987.ecommerce;
 
-import io.item987.ecommerce.api.dto.Cart;
-import io.item987.ecommerce.api.dto.CartItem;
-import io.item987.ecommerce.api.dto.ProductData;
 import io.item987.ecommerce.order.OrderService;
 import io.item987.ecommerce.product.ProductService;
 import org.springframework.boot.ApplicationArguments;
@@ -10,7 +7,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Random;
 
 @Component
