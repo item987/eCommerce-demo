@@ -1,7 +1,7 @@
-package io.item987.ecommerce;
+package io.item987.ecommerce.product;
 
-import io.item987.ecommerce.order.OrderService;
-import io.item987.ecommerce.product.ProductService;
+import io.item987.ecommerce.product.model.Product;
+import io.item987.ecommerce.product.model.ProductRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -12,22 +12,22 @@ import java.util.Random;
 @Component
 class DemoDataLoader implements ApplicationRunner {
 
-    private final ProductService productService;
+    private final ProductRepository productRepository;
 
-    DemoDataLoader(ProductService productService, OrderService orderService) {
-        this.productService = productService;
+    DemoDataLoader(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @Override
     @Transactional
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         createProductsCatalogDemo();
     }
 
     private void createProductsCatalogDemo() {
         var rnd = new Random();
         for (int i = 1; i <= 20; i++)
-            productService.createProduct("Sample Product " + (i < 10 ? "0" + i : i), rnd.nextInt(1, 1000));
+            productRepository.save(new Product("Sample Product " + (i < 10 ? "0" + i : i), rnd.nextInt(1, 1000)));
     }
 
 }

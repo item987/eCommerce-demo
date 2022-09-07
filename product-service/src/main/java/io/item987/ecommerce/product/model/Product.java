@@ -1,4 +1,4 @@
-package io.item987.ecommerce.product;
+package io.item987.ecommerce.product.model;
 
 import jakarta.persistence.*;
 
