@@ -1,6 +1,6 @@
 package io.item987.ecommerce.order;
 
-import io.item987.ecommerce.product.ProductService;
+import io.item987.ecommerce.product.ProductServiceClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +15,13 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
-    private final ProductService productService;
+    private final ProductServiceClient productServiceClient;
 
     public OrderService(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository,
-                        ProductService productService) {
+                        ProductServiceClient productServiceClient) {
         this.orderRepository = orderRepository;
         this.orderDetailRepository = orderDetailRepository;
-        this.productService = productService;
+        this.productServiceClient = productServiceClient;
     }
 
 
@@ -74,18 +74,22 @@ public class OrderService {
 
         for (var orderDetailData : submittedDetails) {
             OrderDetail orderDetail;
-            var product = productService.getProduct(orderDetailData.productId());
+
             var quantity = orderDetailData.quantity();
             var id = orderDetailData.id();
+            var productId = orderDetailData.productId();
+            if (!productServiceClient.isProductPresent(productId))
+                throw new OrderException(String.format("Ordered product with id '%d' does not exist", productId));
+
 
             if (id == null) {
-                orderDetail = new OrderDetail(order, product, orderDetailData.quantity());
+                orderDetail = new OrderDetail(order, productId, orderDetailData.quantity());
             }
             else {
                 orderDetail = existingDetails.get(id);
                 if (orderDetail == null)
                     throw new OrderException(String.format("Order detail with id '%d' not found", id));
-                orderDetail.setProduct(product);
+                orderDetail.setProductId(productId);
                 orderDetail.setQuantity(quantity);
             }
 

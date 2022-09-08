@@ -20,10 +20,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
     }
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
-    @Query("DELETE FROM OrderDetail orderDetail WHERE orderDetail.product.id = :productId")
-    void deleteByProduct(long productId);
-
-    @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("DELETE FROM OrderDetail orderDetail WHERE orderDetail.order.id = :orderId")
     void deleteByOrder(long orderId);
 

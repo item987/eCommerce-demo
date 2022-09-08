@@ -1,6 +1,5 @@
 package io.item987.ecommerce.order;
 
-import io.item987.ecommerce.product.Product;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,17 +12,17 @@ public class OrderDetail {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Order order;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Product product;
+    @Column(name = "product_id", nullable = false)
+    private long productId;
 
     @Column(nullable = false)
     private Integer quantity;
 
     public OrderDetail() {}
 
-    public OrderDetail(Order order, Product product, Integer quantity) {
+    public OrderDetail(Order order, long productId, Integer quantity) {
         this.order = order;
-        this.product = product;
+        this.productId = productId;
         this.quantity = quantity;
     }
 
@@ -43,12 +42,12 @@ public class OrderDetail {
         this.order = order;
     }
 
-    public Product getProduct() {
-        return product;
+    public long getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
 
     public Integer getQuantity() {

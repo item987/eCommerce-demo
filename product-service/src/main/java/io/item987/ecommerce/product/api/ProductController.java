@@ -19,8 +19,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productRepository.findAll(Sort.by("name"));
+    public List<Product> getProducts(@RequestParam(name = "ids", required = false) List<Long> ids) {
+        return ids == null || ids.isEmpty()
+                ? productRepository.findAll(Sort.by("name"))
+                : productRepository.findByIdInOrderByName(ids);
     }
 
     @GetMapping("/{id}")
