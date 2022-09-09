@@ -2,6 +2,7 @@ package io.item987.ecommerce.api;
 
 import io.item987.ecommerce.api.dto.ErrorResponse;
 import io.item987.ecommerce.order.OrderException;
+import io.item987.ecommerce.product.ProductServiceUnavailableException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +27,11 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> handleOrderError(OrderException exception) {
         logger.debug("Order error", exception);
         return createErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
+    @ExceptionHandler(ProductServiceUnavailableException.class)
+    public ResponseEntity<ErrorResponse> handleProductServiceUnavailableError(ProductServiceUnavailableException exception) {
+        return createErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, exception.getMessage());
     }
 
     private static ResponseEntity<ErrorResponse> createErrorResponse(HttpStatus httpStatus, String errorMessage) {
